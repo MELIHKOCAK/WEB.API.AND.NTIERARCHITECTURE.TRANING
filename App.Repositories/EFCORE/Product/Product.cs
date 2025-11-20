@@ -1,4 +1,4 @@
-﻿namespace App.Repositories.EFCORE.Entity;
+﻿namespace App.Repositories.EFCORE.Product;
 
 public class Product
 {
@@ -7,6 +7,6 @@ public class Product
     public decimal Price { get; set; }
     public int Stock { get; set; }
 
-    public Category Category { get; set; } = default!;
+    public Category.Category Category { get; set; } = default!;
     public int CategoryId { get; set; }
 }
