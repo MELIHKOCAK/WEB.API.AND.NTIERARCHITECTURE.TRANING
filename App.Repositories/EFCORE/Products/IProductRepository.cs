@@ -1,4 +1,4 @@
-﻿namespace App.Repositories.EFCORE.Product
+﻿namespace App.Repositories.EFCORE.Products
 {
     public interface IProductRepository : IGenericRepositoryBase<Product>
     {

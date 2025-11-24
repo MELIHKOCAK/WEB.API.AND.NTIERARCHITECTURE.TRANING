@@ -1,8 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Text;
 
 namespace App.Repositories
 {
@@ -15,6 +12,8 @@ namespace App.Repositories
         }
 
         public async ValueTask AddAsync(T Entity) => await _dbcontext.AddAsync(Entity);
+
+        public async ValueTask<T?> GetByIdAsync(int id) => await _dbcontext.Set<T>().FindAsync(id);
 
         public void Delete(T entity)
         {
@@ -29,7 +28,7 @@ namespace App.Repositories
                 return _dbcontext.Set<T>().AsNoTracking().AsQueryable();
         }
 
-        public ValueTask<T?> GetByIdAsync(int id) => _dbcontext.Set<T>().FindAsync(id);
+      
 
         public void Update(T entity) => _dbcontext.Update(entity);
 
