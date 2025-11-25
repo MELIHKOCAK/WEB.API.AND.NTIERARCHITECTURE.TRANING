@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿namespace App.Services.Products;
 
-namespace App.Services.Products
+public interface IProductService
 {
-    public interface IProductService
-    {
-        Task<ServiceResult<List<ProductDto>>> GetTopPriceProductsAsync(int count);
-    }
+    Task<ServiceResult<List<ProductDto>>> GetTopPriceProductsAsync(int count);
+    Task<ServiceResult<ProductDto?>> GetByIdAsync(int id);
+    Task<ServiceResult<CreateProductResponseDto>> CreateAsync(CreateProductRequestDto requestDto);
+    Task<ServiceResult> UpdateAsync(UpdateProductRequestDto requestDto);
+    Task<ServiceResult> DeleteAsync(int id);
+    Task<ServiceResult<List<ProductDto>>> GetAllAsync();
 }
