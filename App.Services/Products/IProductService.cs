@@ -8,4 +8,5 @@ public interface IProductService
     Task<ServiceResult> UpdateAsync(UpdateProductRequestDto requestDto);
     Task<ServiceResult> DeleteAsync(int id);
     Task<ServiceResult<List<ProductDto>>> GetAllAsync();
+    Task<ServiceResult<List<ProductDto>>> GetPagedAllListAsync(int pageNumber, int pageSize);
 }
