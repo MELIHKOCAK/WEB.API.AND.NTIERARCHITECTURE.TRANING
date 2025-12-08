@@ -14,7 +14,12 @@ namespace App.Api.Controller
         public IActionResult CreateActionResult<T>(ServiceResult<T> result)
         {
             if (result.Status == HttpStatusCode.NoContent)
-                return new ObjectResult(null) { StatusCode = result.Status.GetHashCode() };
+                return NoContent();
+
+            if (result.Status == HttpStatusCode.Created)
+            {
+                return Created(result.UrlAsCreated, result.Data);
+            }
 
             return new ObjectResult(result) { StatusCode = result.Status.GetHashCode() };
         }
