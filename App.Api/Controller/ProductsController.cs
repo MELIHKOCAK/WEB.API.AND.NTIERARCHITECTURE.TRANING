@@ -11,30 +11,30 @@ namespace App.Api.Controller
         [HttpGet]
         public async Task<IActionResult> GetAll() => CreateActionResult(await productService.GetAllAsync());
 
-        [HttpGet("{pageNumber}/{pageSize}")]
-        public async Task<IActionResult> GetPagedAll(int pageNumber, int pageSize)
-            => CreateActionResult(await productService.GetPagedAllListAsync(pageNumber,pageSize));
+        [HttpGet("{pageNumber:int}/{pageSize:int}")]
+        public async Task<IActionResult> GetPagedAll([FromRoute]int pageNumber, [FromRoute]int pageSize)
+            => CreateActionResult(await productService.GetPagedAllListAsync(pageNumber, pageSize));
 
         [HttpGet("{id:int}")]
-        public async Task<IActionResult> GetByIdAsync(int id) => CreateActionResult(await productService.GetByIdAsync(id));
+        public async Task<IActionResult> GetByIdAsync([FromRoute]int id) => CreateActionResult(await productService.GetByIdAsync(id));
 
         [HttpPost]
         public async Task<IActionResult> Create(CreateProductRequestDto createDto) => CreateActionResult(await productService.CreateAsync(createDto));
 
         [HttpDelete("{id:int}")]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete([FromRoute]int id)
         {
             return CreateActionResult(await productService.DeleteAsync(id));
         }
 
         [HttpPut]
         public async Task<IActionResult> Update(UpdateProductRequestDto updateDto)
-        { 
-            return CreateActionResult(await productService.UpdateAsync(updateDto)); 
+        {
+            return CreateActionResult(await productService.UpdateAsync(updateDto));
         }
 
-        [HttpPatch("stock")]
-        public async Task<IActionResult> UpdateStock(int id, int quantity)
+        [HttpPatch("stock/{id:int}/{quantity:int}")]
+        public async Task<IActionResult> UpdateStock([FromRoute]int id, [FromRoute]int quantity)
         {
             return CreateActionResult(await productService.UpdateStockAsync(id, quantity));
         }
