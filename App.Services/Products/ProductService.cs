@@ -97,6 +97,20 @@ namespace App.Services.Products
             return  ServiceResult.Succes(System.Net.HttpStatusCode.NoContent);
         }
 
+        public async Task<ServiceResult> UpdateStockAsync(int productId, int quantity)
+        {
+            var product = await _productRepository.GetByIdAsync(productId);
+
+            if (product is null)
+                return ServiceResult.Fail("Product nor found", HttpStatusCode.NotFound);
+
+            product.Stock = quantity;
+            _productRepository.Update(product);
+            await _unitOfWork.SaveChangesAsync();
+
+            return ServiceResult.Succes(HttpStatusCode.NoContent);
+        }
+
         public async Task<ServiceResult> DeleteAsync(int id)
         {
             var product = await _productRepository.GetByIdAsync(id);

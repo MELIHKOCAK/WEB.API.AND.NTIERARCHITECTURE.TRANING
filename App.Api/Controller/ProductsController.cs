@@ -24,13 +24,19 @@ namespace App.Api.Controller
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> Delete(int id)
         {
-            return CreateActionResult<Task<ServiceResult>>(await productService.DeleteAsync(id));
+            return CreateActionResult(await productService.DeleteAsync(id));
         }
 
         [HttpPut]
         public async Task<IActionResult> Update(UpdateProductRequestDto updateDto)
         { 
-            return CreateActionResult<Task<ServiceResult>>(await productService.UpdateAsync(updateDto)); 
+            return CreateActionResult(await productService.UpdateAsync(updateDto)); 
+        }
+
+        [HttpPatch("stock")]
+        public async Task<IActionResult> UpdateStock(int id, int quantity)
+        {
+            return CreateActionResult(await productService.UpdateStockAsync(id, quantity));
         }
     }
 }
