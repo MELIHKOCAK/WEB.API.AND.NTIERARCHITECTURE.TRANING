@@ -7,7 +7,8 @@ Projede öğrendiklerim(Şu ana kadar);
 >* **Dependency Injection**
 >* **Options Pattern**
 >*  **Repository Pattern**
->*  **Result Pattern** 
+>*  **Result Pattern**
+>*  **Unit Of Work Pattern**
 
 ## 🚀 Kullanılan Teknolojiler ve Kütüphaneler
 
