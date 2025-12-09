@@ -11,7 +11,6 @@ namespace App.Services.Products
         {
             RuleFor(x => x.name)
                 .NotNull().WithMessage("Ürün ismi null olamaz.")
-                .NotEmpty().WithMessage("Ürün ismi boş olamaz.")
                 .Length(3,10).WithMessage("Ürün İsmi 3 ile 10 karakter arasında olmalıdır.");
 
             RuleFor(x => x.price)
