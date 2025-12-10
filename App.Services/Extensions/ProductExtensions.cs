@@ -1,5 +1,7 @@
 ﻿using App.Services.Category;
+using App.Services.Mapping;
 using App.Services.Products;
+using AutoMapper;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,6 +18,8 @@ namespace App.Services.Extensions
             
             services.AddFluentValidationAutoValidation();
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+
+            services.AddAutoMapper(cfg => { }, Assembly.GetExecutingAssembly());
 
             return services;
         }

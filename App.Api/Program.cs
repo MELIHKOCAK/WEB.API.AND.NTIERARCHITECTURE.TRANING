@@ -1,6 +1,8 @@
-﻿using App.Repositories.Extensions;
+﻿using App.Repositories.EFCORE.Products;
+using App.Repositories.Extensions;
 using App.Services;
 using App.Services.Extensions;
+using App.Services.Products;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
