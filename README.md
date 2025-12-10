@@ -9,7 +9,9 @@ Projede öğrendiklerim(Şu ana kadar);
 >*  **Repository Pattern**
 >*  **Result Pattern**
 >*  **Unit Of Work Pattern**
+>*  **Pagination**
 >*  **Fluent Validation**
+>*  **AutoMapping**
 
 ## 🚀 Kullanılan Teknolojiler ve Kütüphaneler
 
