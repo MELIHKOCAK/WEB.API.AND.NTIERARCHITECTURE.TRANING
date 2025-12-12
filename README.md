@@ -1,6 +1,6 @@
 # N-Tier Architecture Web API Training
 
-Bu proje, **.NET Core** çatısı altında, ölçeklenebilir ve sürdürülebilir bir **N-Tier (Çok Katmanlı) Mimari Ve WEB Api** öğrenme projesidir. 
+Bu proje, **Asp .NET Core** çatısı altında, ölçeklenebilir ve sürdürülebilir bir **N-Tier (Çok Katmanlı) Mimari Ve WEB Api** öğrenme projesidir. 
 
 Projede öğrendiklerim(Şu ana kadar);
 
@@ -12,6 +12,7 @@ Projede öğrendiklerim(Şu ana kadar);
 >*  **Pagination**
 >*  **Fluent Validation**
 >*  **AutoMapping**
+>*  **Exception Handler(Global Hata Yönetimi)**
 
 ## 🚀 Kullanılan Teknolojiler ve Kütüphaneler
 
