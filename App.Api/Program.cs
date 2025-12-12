@@ -1,8 +1,6 @@
-﻿using App.Repositories.EFCORE.Products;
-using App.Repositories.Extensions;
+﻿using App.Repositories.Extensions;
 using App.Services;
 using App.Services.Extensions;
-using App.Services.Products;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,13 +14,10 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddServices();
 builder.Services.Configure<ApiBehaviorOptions>(options => options.SuppressModelStateInvalidFilter = true);
 
-
 var app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI();
-
-
-
+app.UseExceptionHandler(x => { }); 
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
@@ -33,4 +28,3 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
 app.Run();
-

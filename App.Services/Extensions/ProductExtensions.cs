@@ -1,4 +1,5 @@
 ﻿using App.Services.Category;
+using App.Services.ExceptionHandlers;
 using App.Services.Mapping;
 using App.Services.Products;
 using AutoMapper;
@@ -15,11 +16,10 @@ namespace App.Services.Extensions
         {
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<ICategoryService, CategoryService>();
-            
             services.AddFluentValidationAutoValidation();
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
-
             services.AddAutoMapper(cfg => { }, Assembly.GetExecutingAssembly());
+            services.AddExceptionHandler<GlobalExceptionHandler>();
 
             return services;
         }
