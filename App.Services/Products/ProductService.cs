@@ -5,6 +5,7 @@ using App.Services.Products.Update;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using System.Net;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 
 namespace App.Services.Products
@@ -23,13 +24,10 @@ namespace App.Services.Products
         public async Task<ServiceResult<List<ProductDto>>> GetTopPriceProductsAsync(int count)
         {
             var products = await _productRepository.GetTopPriceProductAsync(count);
+            var productAsDto = _mapper.Map<List<ProductDto>>(products);
+            //var productsAsDto = products.Select(p => new ProductDto(p.Id, p.Name, p.Price, p.Stock)).ToList();
 
-            var productsAsDto = products.Select(p => new ProductDto(p.Id, p.Name, p.Price, p.Stock)).ToList();
-
-            return new ServiceResult<List<ProductDto>>
-            {
-                Data = productsAsDto
-            };
+            return ServiceResult<List<ProductDto>>.Succes(productAsDto);
         }
 
         public async Task<ServiceResult<List<ProductDto>>> GetPagedAllListAsync(int pageNumber, int pageSize)
@@ -152,5 +150,7 @@ namespace App.Services.Products
 
             return ServiceResult.Succes(HttpStatusCode.NoContent);
         }
+
+
     }
 }

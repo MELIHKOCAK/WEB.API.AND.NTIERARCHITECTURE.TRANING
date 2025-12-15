@@ -13,6 +13,10 @@ namespace App.Api.Controller
         [HttpGet]
         public async Task<IActionResult> GetAll() => CreateActionResult(await productService.GetAllAsync());
 
+        [HttpGet("TopPrice/{count:int}")]
+        public async Task<IActionResult> GetTopPrice([FromRoute]int count)
+            => CreateActionResult(await productService.GetTopPriceProductsAsync(count));
+
         [HttpGet("{pageNumber:int}/{pageSize:int}")]
         public async Task<IActionResult> GetPagedAll([FromRoute]int pageNumber, [FromRoute]int pageSize)
             => CreateActionResult(await productService.GetPagedAllListAsync(pageNumber, pageSize));
