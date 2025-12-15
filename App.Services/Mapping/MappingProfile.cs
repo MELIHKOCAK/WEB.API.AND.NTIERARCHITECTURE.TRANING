@@ -2,7 +2,7 @@
 using App.Repositories.EFCORE.Products;
 using App.Services.Products;
 using App.Services.Products.Create;
-using App.Services.Products.Update;
+using App.Services.Category.Create;
 
 namespace App.Services.Mapping
 {
@@ -11,7 +11,8 @@ namespace App.Services.Mapping
         public MappingProfile()
         {
             CreateMap<Product, ProductDto>().ReverseMap();
-            CreateMap<CreateProductRequestDto,Product >();
+            CreateMap<CreateProductRequestDto,Product>();
+            CreateMap<CreateCategoryRequestDto, Repositories.EFCORE.Categories.Category>();
         }
     }
 }

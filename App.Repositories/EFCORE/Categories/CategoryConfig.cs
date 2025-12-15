@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace App.Repositories.EFCORE.Category;
+namespace App.Repositories.EFCORE.Categories;
 
 public class CategoryConfig : IEntityTypeConfiguration<Category>
 {

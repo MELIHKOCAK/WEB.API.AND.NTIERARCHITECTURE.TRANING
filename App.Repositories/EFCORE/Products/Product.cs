@@ -7,6 +7,6 @@ public class Product
     public decimal Price { get; set; }
     public int Stock { get; set; }
 
-    public Category.Category Category { get; set; } = default!;
+    public Categories.Category Category { get; set; } = default!;
     public int CategoryId { get; set; }
 }

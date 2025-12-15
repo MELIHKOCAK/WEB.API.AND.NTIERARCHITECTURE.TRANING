@@ -1,4 +1,4 @@
-﻿namespace App.Repositories.EFCORE.Category;
+﻿namespace App.Repositories.EFCORE.Categories;
 
 public class Category
 {

@@ -1,4 +1,5 @@
 ﻿using App.Repositories.EFCORE;
+using App.Repositories.EFCORE.Categories;
 using App.Repositories.EFCORE.Products;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -22,6 +23,7 @@ namespace App.Repositories.Extensions
              });
 
             service.AddScoped<IProductRepository, ProductRepository>();
+            service.AddScoped<ICategoryRepository, CategoryRepository>();
             service.AddScoped(typeof(IGenericRepositoryBase<>), typeof(GenericRepositoryBase<>));
             service.AddScoped<IUnitOfWork, UnitOfWork>();
             return service;
