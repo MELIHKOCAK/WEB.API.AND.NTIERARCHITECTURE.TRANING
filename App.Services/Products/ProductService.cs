@@ -85,6 +85,13 @@ namespace App.Services.Products
             //};
             #endregion
 
+            var isProductNameExist = await _productRepository
+                .Where(x => x.Name == requestDto.Name, false)
+                .AnyAsync();
+
+            if (isProductNameExist)
+                return ServiceResult<CreateProductResponseDto>.Fail("Aynı İsimde Bir Ürün Zaten Mevcut Lütfen Farklı Bir İsim Giriniz.");
+
             var product = _mapper.Map<Product>(requestDto);
             await _productRepository.AddAsync(product);
             await _unitOfWork.SaveChangesAsync();
@@ -94,10 +101,19 @@ namespace App.Services.Products
 
         public async Task<ServiceResult> UpdateAsync(UpdateProductRequestDto requestDto)
         {
-            var product = await _productRepository.GetByIdAsync(requestDto.id);
+            var product = await _productRepository
+                .GetByIdAsync(requestDto.id);
 
-            if(product is null)
-                return ServiceResult.Fail("Product Not Found", HttpStatusCode.BadRequest);
+            var isProductNameExist = await _productRepository
+                .Where((x => x.Name == requestDto.name && requestDto.id != x.Id), false)
+                .AnyAsync();
+
+            if (product is null)
+                return ServiceResult.Fail("Product Not Found");
+
+
+            if (isProductNameExist)
+                return ServiceResult.Fail("Aynı İsimde Bir Ürün Zaten Mevcut Lütfen Farklı Bir İsim Giriniz.");
 
             //@TODO: AutoMapper Kullanarak Map İşlemini Gerçekleştir.
             product.Name = requestDto.name;
