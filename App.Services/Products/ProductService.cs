@@ -51,7 +51,9 @@ namespace App.Services.Products
         {
             var products = await _productRepository.GetAll(false).ToListAsync();
 
+            #region ManuelMapping
             //var productAsDto = products.Select(p => new ProductDto (p.Id, p.Name, p.Price, p.Stock)).ToList();
+            #endregion
 
             var productAsDto = _mapper.Map<List<ProductDto>>(products);
 
@@ -63,7 +65,7 @@ namespace App.Services.Products
             var product = await _productRepository.GetByIdAsync(id);
 
             if (product is null)
-                return ServiceResult<ProductDto>.Fail("Product Not Found");
+                return ServiceResult<ProductDto?>.Fail("Product Not Found");
 
            // var productsAsDto = new ProductDto(product!.Id, product.Name, product.Price, product.Stock);
             var productAsDto = _mapper.Map<ProductDto>(product);

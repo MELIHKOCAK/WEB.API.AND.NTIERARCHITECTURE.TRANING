@@ -1,6 +1,5 @@
 ﻿using App.Services.Category;
 using App.Services.ExceptionHandlers;
-using App.Services.Mapping;
 using App.Services.Products;
 using AutoMapper;
 using FluentValidation;

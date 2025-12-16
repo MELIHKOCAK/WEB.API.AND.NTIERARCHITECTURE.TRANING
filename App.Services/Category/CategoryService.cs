@@ -6,6 +6,7 @@ using App.Services.Category.Update;
 using App.Services.Products.Create;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using System.Net;
 
 namespace App.Services.Category
 {
@@ -29,38 +30,104 @@ namespace App.Services.Category
                 .AnyAsync();
 
             if (isProductNameExist)
-                return ServiceResult<CreateCategoryResponseDto>.Fail("Aynı İsimde Bir Category Zaten Mevcut Lütfen Farklı Bir İsim Giriniz.");
+                return ServiceResult<CreateCategoryResponseDto>
+                    .Fail("Aynı İsimde Bir Kategori Zaten Mevcut Lütfen Farklı Bir İsim Giriniz.");
 
             var category = _mapper.Map<Repositories.EFCORE.Categories.Category>(requestDto);
             await _categoryRepository.AddAsync(category);
             await _unitOfWork.SaveChangesAsync();
             return ServiceResult<CreateCategoryResponseDto>
-                 .SuccesAsCreated(new CreateCategoryResponseDto(category.Id), $"api/products/{category.Id}");
+                 .SuccesAsCreated(new CreateCategoryResponseDto(category.Id), $"api/products/{category.Id}" );
         }
 
-        public Task<ServiceResult> DeleteAsync(int id)
+        public async Task<ServiceResult> DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            var category = await _categoryRepository.GetByIdAsync(id);
+            if (category is null)
+                return ServiceResult.Fail("Categoryi Bulunamadı",System.Net.HttpStatusCode.NotFound);
+
+            _categoryRepository.Delete(category);
+            await _unitOfWork.SaveChangesAsync();
+            return ServiceResult.Succes(HttpStatusCode.NoContent);
+
         }
 
-        public Task<ServiceResult<List<CategoryDto>>> GetAllAsync()
+        public async Task<ServiceResult<List<CategoryDto>>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            var categories = await _categoryRepository.GetAll(false).ToListAsync();
+            var categoryAsDto = _mapper.Map<List<CategoryDto>>(categories);
+
+            return ServiceResult<List<CategoryDto>>.Succes(categoryAsDto);
         }
 
-        public Task<ServiceResult<CategoryDto?>> GetByIdAsync(int id)
+        public async Task<ServiceResult<CategoryDto?>> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var category = await _categoryRepository.GetByIdAsync(id);
+            
+            if (category is null)
+                return ServiceResult<CategoryDto?>.Fail("Kategori Bulunamadı");
+
+            var categoryAsDto = _mapper.Map<CategoryDto>(category);
+
+            return ServiceResult<CategoryDto?>.Succes(categoryAsDto);
         }
 
-        public Task<ServiceResult<List<CategoryDto>>> GetPagedAllListAsync(int pageNumber, int pageSize)
+        public async Task<ServiceResult<List<CategoryDto>>> GetPagedAllListAsync(int pageNumber, int pageSize)
         {
-            throw new NotImplementedException();
+            int skip = (pageNumber-1) * pageSize;
+            
+            var categories = await _categoryRepository
+                .GetAll(false)
+                .Skip(skip)
+                .Take(pageSize)
+                .ToListAsync();
+
+            var categoryAsDto = _mapper.Map<List<CategoryDto>>(categories);
+
+            return ServiceResult<List<CategoryDto>>.Succes(categoryAsDto);
         }
 
-        public Task<ServiceResult> UpdateAsync(UpdateCategoryRequestDto requestDto)
+        public async Task<ServiceResult> UpdateAsync(UpdateCategoryRequestDto requestDto)
         {
-            throw new NotImplementedException();
+            var category = await _categoryRepository.GetByIdAsync(requestDto.Id);
+
+            if (category is null)
+                return ServiceResult.Fail("Kategori Bulunumadı");
+
+            var isAnyCategoryExists = await _categoryRepository
+                .Where((c => c.Name == requestDto.Name && requestDto.Id != c.Id), true)
+                .AnyAsync();
+
+            if (isAnyCategoryExists)
+                return ServiceResult.Fail("Kategori ismi daha önceden mevcut farklı isim seçiniz!");
+
+            category.Name = requestDto.Name;
+
+            _categoryRepository.Update(category);
+            await _unitOfWork.SaveChangesAsync();
+
+            return ServiceResult.Succes();
+        }
+
+        public async Task<ServiceResult<CategoryWithProductsDto>> GetCategoryByIdWithProductAsync(int id)
+        {
+            var category = await _categoryRepository.GetCategoryByIdWithProductAsync(id);
+
+            if (category is null)
+                return ServiceResult<CategoryWithProductsDto>.Fail("Kategori Bulunamadı"
+                    ,HttpStatusCode.NotFound);
+
+            var categoryAsDto = _mapper.Map<CategoryWithProductsDto>(category);
+
+            return ServiceResult<CategoryWithProductsDto>.Succes(categoryAsDto);
+             
+        }
+
+        public async Task<ServiceResult<List<CategoryWithProductsDto>>> GetCategoryAllWithProductAsync()
+        {
+            var category = await _categoryRepository.GetCategoryAllWithProduct().ToListAsync();
+            var categoryAsDto = _mapper.Map<List<CategoryWithProductsDto>>(category);  
+            return ServiceResult<List<CategoryWithProductsDto>>.Succes(categoryAsDto);
         }
     }
 }

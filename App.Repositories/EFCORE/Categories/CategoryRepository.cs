@@ -15,7 +15,7 @@ namespace App.Repositories.EFCORE.Categories
                 .FirstOrDefaultAsync(c => c.Id == id);
         }
 
-        public IQueryable<Category?> GetCategoryAllWithProductAsync()
+        public IQueryable<Category?> GetCategoryAllWithProduct()
         {
             return context.Categories.Include(c => c.Products).AsQueryable();
         }

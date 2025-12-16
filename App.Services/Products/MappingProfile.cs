@@ -1,18 +1,17 @@
 ﻿using AutoMapper;
 using App.Repositories.EFCORE.Products;
-using App.Services.Products;
 using App.Services.Products.Create;
 using App.Services.Category.Create;
+using App.Services.Category;
 
-namespace App.Services.Mapping
+namespace App.Services.Products
 {
-    public class MappingProfile:Profile
+    public partial class MappingProfile:Profile
     {
         public MappingProfile()
         {
             CreateMap<Product, ProductDto>().ReverseMap();
             CreateMap<CreateProductRequestDto,Product>();
-            CreateMap<CreateCategoryRequestDto, Repositories.EFCORE.Categories.Category>();
         }
     }
 }

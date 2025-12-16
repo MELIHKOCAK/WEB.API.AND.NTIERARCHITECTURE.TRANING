@@ -11,6 +11,8 @@ namespace App.Services.Category
 {
     public interface ICategoryService
     {
+        Task<ServiceResult<CategoryWithProductsDto>> GetCategoryByIdWithProductAsync(int id);
+        Task<ServiceResult<List<CategoryWithProductsDto>>> GetCategoryAllWithProductAsync();
         Task<ServiceResult<CategoryDto?>> GetByIdAsync(int id);
         Task<ServiceResult<CreateCategoryResponseDto>> CreateAsync(CreateCategoryRequestDto requestDto);
         Task<ServiceResult> UpdateAsync(UpdateCategoryRequestDto requestDto);

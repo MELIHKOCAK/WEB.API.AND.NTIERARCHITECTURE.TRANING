@@ -1,15 +1,17 @@
 ﻿using App.Services.Category;
 using App.Services.Category.Create;
+using App.Services.Category.Update;
 using Microsoft.AspNetCore.Mvc;
 
 namespace App.Api.Controller
 {
-    public class CateogriesController(ICategoryService service):CustomBaseController
+    public class CateogriesController(ICategoryService service) : CustomBaseController
     {
         [HttpPost]
-        public async Task<IActionResult> Create(CreateCategoryRequestDto requestDto)
-        {
-            return CreateActionResult(await service.CreateAsync(requestDto));
-        }
+        public async Task<IActionResult> Create(CreateCategoryRequestDto requestDto) =>
+            CreateActionResult(await service.CreateAsync(requestDto));
+
+
+
     }
 }
