@@ -9,7 +9,7 @@ using System.Reflection;
 
 namespace App.Services.Extensions
 {
-    public static class ProductExtensions
+    public static class ServiceExtenstion
     {
         public static IServiceCollection AddServices(this IServiceCollection services)
         {

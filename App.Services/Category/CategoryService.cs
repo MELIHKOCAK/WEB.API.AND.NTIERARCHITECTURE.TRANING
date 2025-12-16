@@ -10,7 +10,7 @@ using System.Net;
 
 namespace App.Services.Category
 {
-
+    //@:TO-DO : Namespace Çakışmalarını düzelt. Repository ve service katmanlarında category ismi tekrar ediyor ve çakışıyor
     public class CategoryService : ICategoryService
     {
         private readonly ICategoryRepository _categoryRepository;
