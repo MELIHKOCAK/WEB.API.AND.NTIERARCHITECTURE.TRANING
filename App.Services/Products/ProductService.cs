@@ -115,10 +115,10 @@ namespace App.Services.Products
             if (isProductNameExist)
                 return ServiceResult.Fail("Aynı İsimde Bir Ürün Zaten Mevcut Lütfen Farklı Bir İsim Giriniz.");
 
-            //@TODO: AutoMapper Kullanarak Map İşlemini Gerçekleştir.
             product.Name = requestDto.name;
             product.Price = requestDto.price;
             product.Stock = requestDto.stock;
+            product.CategoryId = requestDto.categoryId;
 
             _productRepository.Update(product);
             await _unitOfWork.SaveChangesAsync();
