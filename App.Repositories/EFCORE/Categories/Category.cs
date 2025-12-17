@@ -1,5 +1,4 @@
 ﻿namespace App.Repositories.EFCORE.Categories;
-
 public class Category
 {
     public int Id { get; set; }

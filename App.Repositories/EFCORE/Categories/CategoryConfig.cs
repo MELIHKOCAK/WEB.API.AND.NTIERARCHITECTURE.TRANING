@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace App.Repositories.EFCORE.Categories;
-
 public class CategoryConfig : IEntityTypeConfiguration<Category>
 {
     public void Configure(EntityTypeBuilder<Category> builder)
@@ -11,8 +10,6 @@ public class CategoryConfig : IEntityTypeConfiguration<Category>
 
         builder.Property(c => c.Name)
             .HasMaxLength(150);
-
-
     }
 }
 

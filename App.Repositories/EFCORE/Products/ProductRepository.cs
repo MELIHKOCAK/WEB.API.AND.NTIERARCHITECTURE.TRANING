@@ -1,14 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace App.Repositories.EFCORE.Products
+namespace App.Repositories.EFCORE.Products;
+public class ProductRepository(AppDbContext context) : GenericRepositoryBase<Product>(context), IProductRepository
 {
-    public class ProductRepository(AppDbContext context) : GenericRepositoryBase<Product>(context), IProductRepository
-    {
-
-        Task<List<Product>> IProductRepository.GetTopPriceProductAsync(int count)
-        {
-            return context.Products.OrderByDescending(x => x.Price).Take(count).ToListAsync();
-        }
-    }
+    Task<List<Product>> IProductRepository.GetTopPriceProductAsync(int count)
+        => context.Products.OrderByDescending(x => x.Price).Take(count).ToListAsync();
 }
 

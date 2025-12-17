@@ -1,5 +1,4 @@
 ﻿namespace App.Repositories.EFCORE.Products;
-
 public class Product
 {
     public int Id { get; set; }
