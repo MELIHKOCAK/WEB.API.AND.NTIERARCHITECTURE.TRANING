@@ -1,8 +1,4 @@
 ﻿using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace App.Services.Category.Create
 {
     public class CreateCategoryRequestDtoValidation:AbstractValidator<CreateCategoryRequestDto>

@@ -1,8 +1,4 @@
 ﻿using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace App.Services.Products.Create
 {
     public class CreateProductRequestDTOValidator:AbstractValidator<CreateProductRequestDto>
@@ -18,8 +14,6 @@ namespace App.Services.Products.Create
 
             RuleFor(x => x.Stock)
                .InclusiveBetween(1, 500).WithMessage("Ürün Stock Adeti 1 İle 500 Arasında Olmalıdır.");
-
-
         }
     }
 }

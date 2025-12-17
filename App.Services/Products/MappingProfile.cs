@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
 using App.Repositories.EFCORE.Products;
 using App.Services.Products.Create;
-using App.Services.Category.Create;
-using App.Services.Category;
 
 namespace App.Services.Products
 {

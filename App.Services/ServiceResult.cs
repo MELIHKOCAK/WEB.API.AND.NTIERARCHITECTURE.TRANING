@@ -23,7 +23,6 @@ namespace App.Services
         [JsonIgnore]
         public string? UrlAsCreated { get; set; }
 
-
         //Static Factory Method
         public static ServiceResult<T> Succes(T data, HttpStatusCode status = HttpStatusCode.OK)
         {
@@ -53,7 +52,6 @@ namespace App.Services
             };
         }
 
-
         public static ServiceResult<T> Fail(string errorMessage, HttpStatusCode status = HttpStatusCode.BadRequest)
         {
             return new ServiceResult<T>()
@@ -62,12 +60,10 @@ namespace App.Services
                 Status = status
             };
         }
-
     }
 
     public class ServiceResult
     {
-        
         public List<string>? ErrorMessage { get; set; }
 
         [JsonIgnore]
@@ -95,7 +91,6 @@ namespace App.Services
                 Status = status
             };
         }
-
 
         public static ServiceResult Fail(string errorMessage, HttpStatusCode status = HttpStatusCode.BadRequest)
         {
