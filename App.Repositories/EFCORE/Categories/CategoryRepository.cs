@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
 namespace App.Repositories.EFCORE.Categories;
-public class CategoryRepository(AppDbContext context) : GenericRepositoryBase<Category>(context), ICategoryRepository
+public class CategoryRepository(AppDbContext context) : GenericRepositoryBase<Category, int>(context), ICategoryRepository
 {
     public async Task<Category?> GetCategoryByIdWithProductAsync(int id)
     {

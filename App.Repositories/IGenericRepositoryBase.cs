@@ -1,7 +1,8 @@
 ﻿using System.Linq.Expressions;
+using System.Security.Cryptography;
 
 namespace App.Repositories;
-public interface IGenericRepositoryBase<T> where T : class
+public interface IGenericRepositoryBase<T, TId> where T : class where TId : struct
 {
     /// <summary>
     /// Veri Tabanındaki Tüm Verileri Getirmeye Yarar
@@ -14,4 +15,5 @@ public interface IGenericRepositoryBase<T> where T : class
     ValueTask AddAsync(T Entity);
     void Update(T entity);
     void Delete(T entity);
+    Task<bool> AnyAsync(TId id);
 }

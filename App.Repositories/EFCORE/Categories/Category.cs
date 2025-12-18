@@ -1,8 +1,7 @@
 ﻿namespace App.Repositories.EFCORE.Categories;
-public class Category
+public class Category: BaseEntity<int>
 {
-    public int Id { get; set; }
-    public string? Name { get; set; }
+    public string? Name { get; set; } = default!;
     public ICollection<Products.Product> Products { get; set; } = default!;
 }
 
