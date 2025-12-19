@@ -22,11 +22,6 @@ namespace App.Services.Products
         public async Task<ServiceResult<List<ProductDto>>> GetAllAsync()
         {
             var products = await _productRepository.GetAll(false).ToListAsync();
-
-            #region ManuelMapping
-            //var productAsDto = products.Select(p => new ProductDto (p.Id, p.Name, p.Price, p.Stock)).ToList();
-            #endregion
-
             var productAsDto = _mapper.Map<List<ProductDto>>(products);
 
             return ServiceResult<List<ProductDto>>.Succes(productAsDto);
@@ -35,11 +30,6 @@ namespace App.Services.Products
         public async Task<ServiceResult<ProductDto?>> GetByIdAsync(int id)
         {
             var product = await _productRepository.GetByIdAsync(id);
-
-            if (product is null)
-                return ServiceResult<ProductDto?>.Fail("Ürün Bulunamadı.",HttpStatusCode.NotFound);
-
-            // var productsAsDto = new ProductDto(product!.Id, product.Name, product.Price, product.Stock);
             var productAsDto = _mapper.Map<ProductDto>(product);
 
             return ServiceResult<ProductDto>.Succes(productAsDto)!;
@@ -49,7 +39,6 @@ namespace App.Services.Products
         {
             var products = await _productRepository.GetTopPriceProductAsync(count);
             var productAsDto = _mapper.Map<List<ProductDto>>(products);
-            //var productsAsDto = products.Select(p => new ProductDto(p.Id, p.Name, p.Price, p.Stock)).ToList();
 
             return ServiceResult<List<ProductDto>>.Succes(productAsDto);
         }
@@ -99,39 +88,21 @@ namespace App.Services.Products
 
         public async Task<ServiceResult> UpdateAsync(UpdateProductRequestDto requestDto)
         {
-            var product = await _productRepository
-                .GetByIdAsync(requestDto.id);
+            var isAnyCategoryExists = await _productRepository
+               .Where((c => c.Name == requestDto.name && requestDto.id != c.Id), true)
+               .AnyAsync();
 
-            var isProductNameExist = await _productRepository
-                .Where((x => x.Name == requestDto.name && requestDto.id != x.Id), false)
-                .AnyAsync();
-
-            if (product is null)
-                return ServiceResult.Fail("Ürün Bulunamadı",HttpStatusCode.NotFound);
-
-
-            if (isProductNameExist)
-                return ServiceResult.Fail("Aynı İsimde Bir Ürün Zaten Mevcut Lütfen Farklı Bir İsim Giriniz.");
-
-            product.Name = requestDto.name;
-            product.Price = requestDto.price;
-            product.Stock = requestDto.stock;
-            product.CategoryId = requestDto.categoryId;
-
+            var product = _mapper.Map<Product>(requestDto);
             _productRepository.Update(product);
             await _unitOfWork.SaveChangesAsync();
 
-            return ServiceResult.Succes(System.Net.HttpStatusCode.NoContent);
+            return ServiceResult.Succes(HttpStatusCode.NoContent);
         }
 
         public async Task<ServiceResult> UpdateStockAsync(int productId, int quantity)
         {
             var product = await _productRepository.GetByIdAsync(productId);
-
-            if (product is null)
-                return ServiceResult.Fail("Product nor found", HttpStatusCode.NotFound);
-
-            product.Stock = quantity;
+            product!.Stock = quantity;
             _productRepository.Update(product);
             await _unitOfWork.SaveChangesAsync();
 
@@ -141,11 +112,7 @@ namespace App.Services.Products
         public async Task<ServiceResult> DeleteAsync(int id)
         {
             var product = await _productRepository.GetByIdAsync(id);
-
-            if (product is null)
-                return ServiceResult.Fail("Ürün Bulunamadı", HttpStatusCode.NotFound);
-
-            _productRepository.Delete(product);
+            _productRepository.Delete(product!);
             await _unitOfWork.SaveChangesAsync();
 
             return ServiceResult.Succes(HttpStatusCode.NoContent);

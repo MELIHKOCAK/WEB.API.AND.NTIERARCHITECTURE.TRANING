@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace App.Services.Category.Update
+namespace App.Services.Categories.Update
 {
     public class UpdateCategoryRequestDtoValidator:AbstractValidator<UpdateCategoryRequestDto>
     {

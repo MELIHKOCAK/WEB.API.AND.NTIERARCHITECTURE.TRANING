@@ -1,6 +1,6 @@
-﻿using App.Services.Category.Create;
-using App.Services.Category.Update;
-namespace App.Services.Category
+﻿using App.Services.Categories.Create;
+using App.Services.Categories.Update;
+namespace App.Services.Categories
 {
     public interface ICategoryService
     {

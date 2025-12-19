@@ -1,4 +1,4 @@
-﻿namespace App.Services.Category.Create;
+﻿namespace App.Services.Categories.Create;
 
 public record CreateCategoryRequestDto(string Name);
 

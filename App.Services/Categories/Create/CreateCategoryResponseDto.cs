@@ -1,3 +1,3 @@
-﻿namespace App.Services.Category.Create;
+﻿namespace App.Services.Categories.Create;
 
 public record CreateCategoryResponseDto(int id);

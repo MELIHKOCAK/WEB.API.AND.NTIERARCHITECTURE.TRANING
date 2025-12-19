@@ -1,5 +1,6 @@
-﻿using App.Services.Category;
+﻿using App.Services.Categories;
 using App.Services.ExceptionHandlers;
+using App.Services.Filters.NotFoundFilter;
 using App.Services.Products;
 using AutoMapper;
 using FluentValidation;
@@ -15,6 +16,9 @@ namespace App.Services.Extensions
         {
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped(typeof(NotFoundFilter<,>));
+            services.AddScoped(typeof(IIdResolver<>), typeof(PrimitiveIdResolver<>));
+            services.AddScoped(typeof(IIdResolver<>), typeof(EntityIdResolver<>));
             services.AddFluentValidationAutoValidation();
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
             services.AddAutoMapper(cfg => { }, Assembly.GetExecutingAssembly());

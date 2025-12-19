@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using App.Repositories.EFCORE;
+using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
 namespace App.Repositories;
@@ -6,9 +7,9 @@ public class GenericRepositoryBase<T, TId> : IGenericRepositoryBase<T, TId>
     where T : BaseEntity<TId>
     where TId : struct
 {
-    private readonly DbContext _dbcontext;
+    private readonly AppDbContext _dbcontext;
     private readonly DbSet<T> _dbSet;
-    public GenericRepositoryBase(DbContext dbContext)
+    public GenericRepositoryBase(AppDbContext dbContext)
     {
         _dbcontext = dbContext;
         _dbSet = _dbcontext.Set<T>();

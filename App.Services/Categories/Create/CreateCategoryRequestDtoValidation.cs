@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-namespace App.Services.Category.Create
+namespace App.Services.Categories.Create
 {
     public class CreateCategoryRequestDtoValidation:AbstractValidator<CreateCategoryRequestDto>
     {

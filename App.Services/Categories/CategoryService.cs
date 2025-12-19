@@ -1,12 +1,15 @@
 ﻿using App.Repositories;
 using App.Repositories.EFCORE.Categories;
-using App.Services.Category.Create;
-using App.Services.Category.Update;
+using App.Repositories.EFCORE.Products;
+using App.Services.Categories.Create;
+using App.Services.Categories.Update;
+using App.Services.Filters.NotFoundFilter;
 using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Net;
 
-namespace App.Services.Category
+namespace App.Services.Categories
 {
     //@:TO-DO : Namespace Çakışmalarını düzelt. Repository ve service katmanlarında category ismi tekrar ediyor ve çakışıyor
     public class CategoryService : ICategoryService
@@ -31,10 +34,6 @@ namespace App.Services.Category
         public async Task<ServiceResult<CategoryDto?>> GetByIdAsync(int id)
         {
             var category = await _categoryRepository.GetByIdAsync(id);
-
-            if (category is null)
-                return ServiceResult<CategoryDto?>.Fail("Kategori Bulunamadı", HttpStatusCode.NotFound);
-
             var categoryAsDto = _mapper.Map<CategoryDto>(category);
 
             return ServiceResult<CategoryDto?>.Succes(categoryAsDto);
@@ -43,10 +42,6 @@ namespace App.Services.Category
         public async Task<ServiceResult<CategoryWithProductsDto>> GetCategoryByIdWithProductAsync(int id)
         {
             var category = await _categoryRepository.GetCategoryByIdWithProductAsync(id);
-
-            if (category is null)
-                return ServiceResult<CategoryWithProductsDto>.Fail("Kategori Bulunamadı"
-                    , HttpStatusCode.NotFound);
 
             var categoryAsDto = _mapper.Map<CategoryWithProductsDto>(category);
 
@@ -95,11 +90,6 @@ namespace App.Services.Category
 
         public async Task<ServiceResult> UpdateAsync(UpdateCategoryRequestDto requestDto)
         {
-            var category = await _categoryRepository.GetByIdAsync(requestDto.Id);
-
-            if (category is null)
-                return ServiceResult.Fail("Kategori Bulunumadı", HttpStatusCode.NotFound);
-
             var isAnyCategoryExists = await _categoryRepository
                 .Where((c => c.Name == requestDto.Name && requestDto.Id != c.Id), true)
                 .AnyAsync();
@@ -107,22 +97,20 @@ namespace App.Services.Category
             if (isAnyCategoryExists)
                 return ServiceResult.Fail("Kategori ismi daha önceden mevcut farklı isim seçiniz!");
 
-            category.Name = requestDto.Name;
+            var category = _mapper.Map<Category>(requestDto);
 
             _categoryRepository.Update(category);
             await _unitOfWork.SaveChangesAsync();
 
             return ServiceResult.Succes(HttpStatusCode.NoContent);
         }
-
+        
         public async Task<ServiceResult> DeleteAsync(int id)
         {
             var category = await _categoryRepository.GetByIdAsync(id);
-            if (category is null)
-                return ServiceResult.Fail("Categoryi Bulunamadı", HttpStatusCode.NotFound);
-
-            _categoryRepository.Delete(category);
+            _categoryRepository.Delete(category!);
             await _unitOfWork.SaveChangesAsync();
+
             return ServiceResult.Succes(HttpStatusCode.NoContent);
 
         }
