@@ -4,6 +4,7 @@ using App.Services.Products.Create;
 using App.Services.Products.Update;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System.Net;
 
 namespace App.Services.Products
@@ -13,11 +14,15 @@ namespace App.Services.Products
         private readonly IProductRepository _productRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        public ProductService(IProductRepository productRepository, IUnitOfWork unitOfWork, IMapper mapper)
+        private readonly ILogger<ProductService> _logger;
+
+        //@TO:DO: Create, Update Gibi metotlarda kayıtın daha önce olup olmadığını kontrol ediyorum. Onu Action Filtere Dönüştür.
+        public ProductService(IProductRepository productRepository, IUnitOfWork unitOfWork, IMapper mapper, ILogger<ProductService> logger)
         {
             _productRepository = productRepository;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _logger = logger;
         }
         public async Task<ServiceResult<List<ProductDto>>> GetAllAsync()
         {
@@ -95,6 +100,7 @@ namespace App.Services.Products
             var product = _mapper.Map<Product>(requestDto);
             _productRepository.Update(product);
             await _unitOfWork.SaveChangesAsync();
+            _logger.LogInformation("Product Updated {ProductId}", product.Id);
 
             return ServiceResult.Succes(HttpStatusCode.NoContent);
         }
