@@ -13,6 +13,9 @@ Projede öğrendiklerim(Şu ana kadar);
 >*  **Fluent Validation**
 >*  **AutoMapping**
 >*  **Exception Handler(Global Hata Yönetimi)**
+>*  **Filters(Action)**
+>*  **Basics Of Reflection**
+>*  **Strategy Pattern**
 
 ## 🚀 Kullanılan Teknolojiler ve Kütüphaneler
 
