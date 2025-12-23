@@ -16,6 +16,7 @@ Projede öğrendiklerim(Şu ana kadar);
 >*  **Filters(Action)**
 >*  **Basics Of Reflection**
 >*  **Strategy Pattern**
+>*  **Logging(Serilog)**
 
 ## 🚀 Kullanılan Teknolojiler ve Kütüphaneler
 
