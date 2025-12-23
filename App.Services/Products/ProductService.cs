@@ -28,6 +28,8 @@ namespace App.Services.Products
         {
             var products = await _productRepository.GetAll(false).ToListAsync();
             var productAsDto = _mapper.Map<List<ProductDto>>(products);
+            _logger.LogInformation("All Product Listed");
+
 
             return ServiceResult<List<ProductDto>>.Succes(productAsDto);
         }
@@ -36,6 +38,8 @@ namespace App.Services.Products
         {
             var product = await _productRepository.GetByIdAsync(id);
             var productAsDto = _mapper.Map<ProductDto>(product);
+            _logger.LogInformation("Product listed with by id {0}", id);
+
 
             return ServiceResult<ProductDto>.Succes(productAsDto)!;
         }
@@ -44,6 +48,7 @@ namespace App.Services.Products
         {
             var products = await _productRepository.GetTopPriceProductAsync(count);
             var productAsDto = _mapper.Map<List<ProductDto>>(products);
+            _logger.LogInformation("Top {0} Price Product Listed",count);
 
             return ServiceResult<List<ProductDto>>.Succes(productAsDto);
         }
@@ -60,6 +65,7 @@ namespace App.Services.Products
             //var productsAsDto = products.Select(p => new ProductDto(p.Id, p.Name, p.Price, p.Stock)).ToList();
 
             var productsAsDto = _mapper.Map<List<ProductDto>>(products);
+            _logger.LogInformation("All Product Listed");
 
             return ServiceResult<List<ProductDto>>.Succes(productsAsDto);
 
@@ -87,8 +93,10 @@ namespace App.Services.Products
             var product = _mapper.Map<Product>(requestDto);
             await _productRepository.AddAsync(product);
             await _unitOfWork.SaveChangesAsync();
+            _logger.LogInformation("Product Created {ProductId}", product.Id);
             return ServiceResult<CreateProductResponseDto>.SuccesAsCreated(new CreateProductResponseDto(product.Id),
                 $"api/products/{product.Id}");
+           
         }
 
         public async Task<ServiceResult> UpdateAsync(UpdateProductRequestDto requestDto)
@@ -100,7 +108,7 @@ namespace App.Services.Products
             var product = _mapper.Map<Product>(requestDto);
             _productRepository.Update(product);
             await _unitOfWork.SaveChangesAsync();
-            _logger.LogInformation("Product Updated {ProductId}", product.Id);
+            _logger.LogInformation("Product Updated {ProductId}", requestDto.id);
 
             return ServiceResult.Succes(HttpStatusCode.NoContent);
         }
@@ -111,6 +119,7 @@ namespace App.Services.Products
             product!.Stock = quantity;
             _productRepository.Update(product);
             await _unitOfWork.SaveChangesAsync();
+            _logger.LogInformation("Product Stock Updated {ProductId}", productId);
 
             return ServiceResult.Succes(HttpStatusCode.NoContent);
         }
@@ -120,6 +129,7 @@ namespace App.Services.Products
             var product = await _productRepository.GetByIdAsync(id);
             _productRepository.Delete(product!);
             await _unitOfWork.SaveChangesAsync();
+            _logger.LogInformation("Product Deleted {ProductId}", id);
 
             return ServiceResult.Succes(HttpStatusCode.NoContent);
         }
