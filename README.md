@@ -4,19 +4,20 @@ Bu proje, **Asp .NET Core** çatısı altında, ölçeklenebilir ve sürdürüle
 
 Projede öğrendiklerim(Şu ana kadar);
 
->* **Dependency Injection**
->* **Options Pattern**
+>*  **Dependency Injection**
+>*  **Options Pattern**
 >*  **Repository Pattern**
 >*  **Result Pattern**
 >*  **Unit Of Work Pattern**
 >*  **Pagination**
->*  **Fluent Validation**
->*  **AutoMapping**
+>*  **Validation(Fluent Validation)**
+>*  **Mapping(Auto Mapper)**
 >*  **Exception Handler(Global Hata Yönetimi)**
 >*  **Filters(Action)**
 >*  **Basics Of Reflection**
 >*  **Strategy Pattern**
 >*  **Logging(Serilog)**
+>*  **Rate Limit(Built In)**
 
 ## 🚀 Kullanılan Teknolojiler ve Kütüphaneler
 
