@@ -4,11 +4,14 @@ using App.Services.Categories.Create;
 using App.Services.Categories.Update;
 using App.Services.Filters.NotFoundFilter;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace App.Api.Controller
 {
+    [EnableRateLimiting("Token")]
     public class CateogriesController(ICategoryService service) : CustomBaseController
     {
+        [EnableRateLimiting("Concurrency")]
         [HttpGet]
         public async Task<IActionResult> GetAll()
            => CreateActionResult(await service.GetAllAsync());
@@ -18,10 +21,12 @@ namespace App.Api.Controller
         public async Task<IActionResult> GetById([FromRoute] int id)
            => CreateActionResult(await service.GetByIdAsync(id));
 
+        [EnableRateLimiting("Concurrency")]
         [HttpGet("products")]
         public async Task<IActionResult> GetWithProducts()
            => CreateActionResult(await service.GetCategoryAllWithProductAsync());
 
+        [EnableRateLimiting("Concurrency")]
         [ServiceFilter(typeof(NotFoundFilter<Category, int>))]
         [HttpGet("{id:int}/products")]
         public async Task<IActionResult> GetByIdWithProducts([FromRoute] int id)

@@ -20,22 +20,24 @@ builder.Host.UseSerilog((context, services, config) =>
     config.ReadFrom.Configuration(context.Configuration)
     .ReadFrom.Services(services)
     .Enrich.FromLogContext()
-);
+    );
+
+builder.Services.AddConfigureRateLimits();
+
 
 
 var app = builder.Build();
 
+app.UseRateLimiter();
 app.UseMiddleware<CorrelationIdMiddleware>();
 app.UseSerilogRequestResponseLogging();
 app.UseSwagger();
 app.UseSwaggerUI();
-app.UseExceptionHandler(x => { }); 
+app.UseExceptionHandler(x => { });
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 }
-
-
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
