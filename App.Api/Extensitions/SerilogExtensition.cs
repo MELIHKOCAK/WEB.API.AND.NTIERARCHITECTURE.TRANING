@@ -14,8 +14,13 @@ namespace App.Api.Extensitions
                 options.MessageTemplate =
                     "HTTP {RequestMethod} {RequestPath} responded {StatusCode} in {Elapsed:0.0000} ms";
 
+                
                 options.EnrichDiagnosticContext = (diagnosticContext, httpContext) =>
                 {
+                    var correlationId = httpContext.Response.Headers["X-Correlation-ID"].FirstOrDefault()
+                        ?? httpContext.TraceIdentifier;
+
+                    diagnosticContext.Set("CorrelationId", correlationId);
                     diagnosticContext.Set("RequestHost", httpContext.Request.Host.Value);
                     diagnosticContext.Set("RequestScheme", httpContext.Request.Scheme);
                     diagnosticContext.Set("ClientIP",

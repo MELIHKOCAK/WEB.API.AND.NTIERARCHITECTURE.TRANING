@@ -17,9 +17,12 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddServices();
 builder.Services.Configure<ApiBehaviorOptions>(options => options.SuppressModelStateInvalidFilter = true);
 builder.Host.UseSerilog((context, services, config) =>
-{
-    config.ReadFrom.Configuration(context.Configuration);
-});
+    config.ReadFrom.Configuration(context.Configuration)
+    .ReadFrom.Services(services)
+    .Enrich.FromLogContext()
+);
+
+
 var app = builder.Build();
 
 app.UseMiddleware<CorrelationIdMiddleware>();

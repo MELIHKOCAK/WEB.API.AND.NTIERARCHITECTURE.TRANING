@@ -19,20 +19,17 @@ namespace App.Services.Categories
         private readonly ICategoryRepository _categoryRepository;
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
-        private readonly ILogger<CategoryService> _logger;
-        public CategoryService(ICategoryRepository categoryRepository, IMapper mapper, IUnitOfWork unitOfWork, ILogger<CategoryService> logger)
+        public CategoryService(ICategoryRepository categoryRepository, IMapper mapper, IUnitOfWork unitOfWork)
         {
             _categoryRepository = categoryRepository;
             _mapper = mapper;
             _unitOfWork = unitOfWork;
-            _logger = logger;
         }
 
         public async Task<ServiceResult<List<CategoryDto>>> GetAllAsync()
         {
             var categories = await _categoryRepository.GetAll(false).ToListAsync();
             var categoryAsDto = _mapper.Map<List<CategoryDto>>(categories);
-            _logger.LogInformation("All Category Listed");
             return ServiceResult<List<CategoryDto>>.Succes(categoryAsDto);
         }
 
@@ -40,7 +37,6 @@ namespace App.Services.Categories
         {
             var category = await _categoryRepository.GetByIdAsync(id);
             var categoryAsDto = _mapper.Map<CategoryDto>(category);
-            _logger.LogInformation("Category listed with by id {id}",id);
 
             return ServiceResult<CategoryDto?>.Succes(categoryAsDto);
         }
@@ -49,8 +45,6 @@ namespace App.Services.Categories
         {
             var category = await _categoryRepository.GetCategoryByIdWithProductAsync(id);
             var categoryAsDto = _mapper.Map<CategoryWithProductsDto>(category);
-            _logger.LogInformation("Category listed with product by id {id}",id);
-
 
             return ServiceResult<CategoryWithProductsDto>.Succes(categoryAsDto);
 
@@ -60,7 +54,6 @@ namespace App.Services.Categories
         {
             var category = await _categoryRepository.GetCategoryAllWithProduct().ToListAsync();
             var categoryAsDto = _mapper.Map<List<CategoryWithProductsDto>>(category);
-            _logger.LogInformation("All Category Listed With Product");
 
             return ServiceResult<List<CategoryWithProductsDto>>.Succes(categoryAsDto);
         }
@@ -93,7 +86,6 @@ namespace App.Services.Categories
             var category = _mapper.Map<Repositories.EFCORE.Categories.Category>(requestDto);
             await _categoryRepository.AddAsync(category);
             await _unitOfWork.SaveChangesAsync();
-            _logger.LogInformation("Category Created {id}", category.Id);
 
             return ServiceResult<CreateCategoryResponseDto>
                  .SuccesAsCreated(new CreateCategoryResponseDto(category.Id), $"api/products/{category.Id}" );
@@ -112,7 +104,6 @@ namespace App.Services.Categories
 
             _categoryRepository.Update(category);
             await _unitOfWork.SaveChangesAsync();
-            _logger.LogInformation("Category Updated: {id}",category.Id);
 
             return ServiceResult.Succes(HttpStatusCode.NoContent);
         }
@@ -123,7 +114,6 @@ namespace App.Services.Categories
             _categoryRepository.Delete(category!);
             await _unitOfWork.SaveChangesAsync();
 
-            _logger.LogInformation("Category Deleted: {id}", category!.Id);
             return ServiceResult.Succes(HttpStatusCode.NoContent);
 
         }
