@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
 using System.Net;
 
-namespace App.Api.Controller
+namespace App.Api.Controller.v1
 {
     [EnableRateLimiting("Token")]
     public class ProductsController(IProductService productService) : CustomBaseController

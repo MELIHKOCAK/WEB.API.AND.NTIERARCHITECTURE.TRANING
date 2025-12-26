@@ -6,7 +6,7 @@ using App.Services.Filters.NotFoundFilter;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
 
-namespace App.Api.Controller
+namespace App.Api.Controller.v1
 {
     [EnableRateLimiting("Token")]
     public class CateogriesController(ICategoryService service) : CustomBaseController
