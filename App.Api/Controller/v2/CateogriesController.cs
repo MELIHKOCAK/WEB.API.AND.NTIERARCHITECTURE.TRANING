@@ -3,11 +3,13 @@ using App.Services.Categories;
 using App.Services.Categories.Create;
 using App.Services.Categories.Update;
 using App.Services.Filters.NotFoundFilter;
+using Asp.Versioning;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
 
 namespace App.Api.Controller.v2
 {
+    [ApiVersion(2.0)]
     [EnableRateLimiting("Token")]
     public class CateogriesController(ICategoryService service) : CustomBaseController
     {

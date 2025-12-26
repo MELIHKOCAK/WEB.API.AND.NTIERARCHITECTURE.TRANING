@@ -3,10 +3,11 @@ using App.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
+using Asp.Versioning;
 
 namespace App.Api.Controller
 {
-    [Route("api/[controller]")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     public class CustomBaseController : ControllerBase
     {

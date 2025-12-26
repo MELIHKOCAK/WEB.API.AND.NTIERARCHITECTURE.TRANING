@@ -12,6 +12,7 @@ using System.Net;
 
 namespace App.Api.Controller.v2
 {
+    [ApiVersion(2.0)]
     [EnableRateLimiting("Token")]
     public class ProductsController(IProductService productService) : CustomBaseController
     {

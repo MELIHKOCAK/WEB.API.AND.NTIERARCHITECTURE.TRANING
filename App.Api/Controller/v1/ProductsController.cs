@@ -4,6 +4,7 @@ using App.Services.Filters.NotFoundFilter;
 using App.Services.Products;
 using App.Services.Products.Create;
 using App.Services.Products.Update;
+using Asp.Versioning;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
@@ -11,6 +12,7 @@ using System.Net;
 
 namespace App.Api.Controller.v1
 {
+    [ApiVersion(1.0)]
     [EnableRateLimiting("Token")]
     public class ProductsController(IProductService productService) : CustomBaseController
     {

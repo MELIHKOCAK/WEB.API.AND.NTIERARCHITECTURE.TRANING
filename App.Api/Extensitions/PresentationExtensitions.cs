@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.RateLimiting;
+﻿using Asp.Versioning;
+using Microsoft.AspNetCore.RateLimiting;
+using Microsoft.OpenApi;
 using Serilog;
 using System.Runtime.CompilerServices;
 using System.Threading.RateLimiting;
@@ -21,7 +23,6 @@ namespace App.Api.Extensitions
                 {
                     var correlationId = httpContext.Response.Headers["X-Correlation-ID"].FirstOrDefault()
                         ?? httpContext.TraceIdentifier;
-
                     diagnosticContext.Set("CorrelationId", correlationId);
                     diagnosticContext.Set("RequestHost", httpContext.Request.Host.Value);
                     diagnosticContext.Set("RequestScheme", httpContext.Request.Scheme);
@@ -50,12 +51,34 @@ namespace App.Api.Extensitions
 
                 options.AddConcurrencyLimiter("Concurrency", _options =>
                 {
-
                     _options.PermitLimit = 15;
                     _options.QueueLimit = 5;
                     _options.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
 
                 });
+            });
+
+            return services;
+        }
+
+        public static IServiceCollection ConfigureVersioning(this IServiceCollection services)
+        {
+            services.AddApiVersioning(opt =>
+            {
+                opt.AssumeDefaultVersionWhenUnspecified = true;
+                opt.DefaultApiVersion = new ApiVersion(1.0);
+                opt.ReportApiVersions = true;
+                opt.ApiVersionReader = new UrlSegmentApiVersionReader();
+            }).AddApiExplorer(opt =>
+            {
+                opt.GroupNameFormat = "'v'VVV";
+                opt.SubstituteApiVersionInUrl = true;
+            });
+
+            services.AddSwaggerGen(cfg =>
+            {
+                cfg.SwaggerDoc("v1", new OpenApiInfo { Title = "WEBAPITRANING", Version = "v1" });
+                cfg.SwaggerDoc("v2", new OpenApiInfo { Title = "WEBAPITRANING", Version = "v2" });
             });
 
             return services;
