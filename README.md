@@ -4,7 +4,7 @@ Bu proje, **Asp .NET Core** çatısı altında, ölçeklenebilir ve sürdürüle
 
 Projede öğrendiklerim(Şu ana kadar);
 
->*  **Dependency Injection**
+>*  **Dependency Injection Uygulanması**
 >*  **Options Pattern**
 >*  **Repository Pattern**
 >*  **Result Pattern**
@@ -18,6 +18,7 @@ Projede öğrendiklerim(Şu ana kadar);
 >*  **Strategy Pattern**
 >*  **Logging(Serilog)**
 >*  **Rate Limit(Built In)**
+>*  **Versiyonlama**
 
 ## 🚀 Kullanılan Teknolojiler ve Kütüphaneler
 
@@ -29,10 +30,6 @@ Projede öğrendiklerim(Şu ana kadar);
 ## 🏗 Mimari Yapı
 
 Proje nihai halini alınca güncelleyeceğim.
-
-## ✨ Öne Çıkan Özellikler
-
-* **Generic Repository Pattern:** Tekrarlı veri erişim kodlarını önlemek için geliştirilmiştir.
 
 
 ## 🛠 Kurulum ve Çalıştırma
